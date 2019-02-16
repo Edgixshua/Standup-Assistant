@@ -26,13 +26,5 @@ namespace Standup_Assistant.Functionality
 
             return filteredLog;
         }
-
-        public static void WriteCommits(IEnumerable<Commit> commits)
-        {
-            foreach (var commit in commits)
-            {
-                Console.WriteLine(commit.Message);
-            }
-        }
     }
 }

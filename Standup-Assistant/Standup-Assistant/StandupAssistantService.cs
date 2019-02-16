@@ -1,6 +1,8 @@
-﻿using System;
+﻿using LibGit2Sharp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
@@ -19,7 +21,8 @@ namespace Standup_Assistant
 
         protected override void OnStart(string[] args)
         {
-            // TODO: Add code here to start your service.
+            var repo = new Repository(ConfigurationManager.AppSettings["GitRepositoryDirectory"]);
+            var branch = ConfigurationManager.AppSettings["Branch"];
         }
 
         protected override void OnStop()
