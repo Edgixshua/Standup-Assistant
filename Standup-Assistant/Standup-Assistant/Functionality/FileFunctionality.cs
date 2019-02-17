@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using LibGit2Sharp;
+using Validation;
 
 namespace Standup_Assistant.Functionality
 {
@@ -9,6 +10,9 @@ namespace Standup_Assistant.Functionality
     {
         public static void CreateNotesFile(string notesFile, IEnumerable<string> contents)
         {
+            Requires.NotNull(notesFile, nameof(notesFile));
+            Requires.NotNull(contents, nameof(contents));
+
             File.WriteAllLines(notesFile, contents);
         }
 

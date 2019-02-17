@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using LibGit2Sharp;
+using Validation;
 
 namespace Standup_Assistant.Functionality
 {
@@ -10,6 +11,8 @@ namespace Standup_Assistant.Functionality
     {
         public static IEnumerable<Commit> GetFilteredCommitLog(Repository repo, string branch)
         {
+            Requires.NotNull(branch, nameof(branch));
+
             var dateSince = new DateTimeOffset(DateTime.Now.AddDays(-1));
             var dateUntil = new DateTimeOffset(DateTime.Now);
             var commitAuthor = ConfigurationManager.AppSettings["CommitAuthor"];
