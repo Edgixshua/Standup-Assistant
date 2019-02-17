@@ -1,14 +1,8 @@
 ﻿using LibGit2Sharp;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Standup_Assistant.Functionality;
 using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Standup_Assistant
 {
@@ -21,13 +15,20 @@ namespace Standup_Assistant
 
         protected override void OnStart(string[] args)
         {
-            var repo = new Repository(ConfigurationManager.AppSettings["GitRepositoryDirectory"]);
             var branch = ConfigurationManager.AppSettings["Branch"];
+            var file = ConfigurationManager.AppSettings["StandupNotesFile"];
+            var repo = new Repository(ConfigurationManager.AppSettings["GitRepositoryDirectory"]);
+
+            // Delete yesterday's notes.
+            File.Delete(file);
+
+            var commits = GitFunctionality.GetFilteredCommitLog(repo, branch);
+
+            FileFunctionality.CreateNotesFile(file, FileFunctionality.CreateNotesContent(repo, commits));
         }
 
         protected override void OnStop()
         {
-            // TODO: Add code here to perform any tear-down necessary to stop your service.
         }
     }
 }

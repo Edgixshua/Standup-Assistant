@@ -12,6 +12,7 @@ namespace Standup_Assistant.Functionality
         {
             var dateSince = new DateTimeOffset(DateTime.Now.AddDays(-1));
             var dateUntil = new DateTimeOffset(DateTime.Now);
+            var commitAuthor = ConfigurationManager.AppSettings["CommitAuthor"];
 
             var filter = new CommitFilter
             {
@@ -25,7 +26,7 @@ namespace Standup_Assistant.Functionality
             // Filter commit log to only return commits since yesterday.
             var filteredLog = results.Where(commit => commit.Committer.When > dateSince && 
                               commit.Committer.When < dateUntil && 
-                              commit.Author.Name == ConfigurationManager.AppSettings["CommitAuthor"]);
+                              commit.Author.Name == commitAuthor);
 
             return filteredLog;
         }
